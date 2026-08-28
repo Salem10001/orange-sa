@@ -1289,10 +1289,12 @@ body{--cream:var(--black);--cream-2:var(--black);--gray-100:var(--black)}
   z-index:90;
   display:inline-flex;
   align-items:center;
-  gap:8px;
+  justify-content:center;
   height:56px;
-  padding:0 20px 0 16px;
-  border-radius:var(--r-pill);
+  width:56px;
+  padding:0;
+  overflow:hidden;
+  border-radius:50%;
   background:var(--orange-500);
   color:var(--black);
   border:1px solid rgba(255,178,102,.6);
@@ -1305,17 +1307,24 @@ body{--cream:var(--black);--cream-2:var(--black);--gray-100:var(--black)}
   text-decoration:none;
   max-width:calc(100vw - 32px);
   animation:buyFabFloat 6s ease-in-out infinite;
-  transition:opacity .35s ease,transform .35s cubic-bezier(.16,1,.3,1),box-shadow .25s ease,background .25s ease;
+  transition:width .42s cubic-bezier(.16,1,.3,1),border-radius .42s cubic-bezier(.16,1,.3,1),box-shadow .25s ease,background .25s ease,opacity .35s ease,transform .35s cubic-bezier(.16,1,.3,1);
   will-change:transform;
 }
 .buy-fab__inner{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  transition:transform .25s cubic-bezier(.16,1,.3,1);
+  justify-content:center;
+  gap:0;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),gap .3s ease;
 }
-.buy-fab__icon{width:20px;height:20px;display:block;flex:none}
-.buy-fab__label{white-space:nowrap}
+.buy-fab__icon{width:22px;height:22px;display:block;flex:none}
+.buy-fab__label{
+  white-space:nowrap;
+  max-width:0;
+  opacity:0;
+  overflow:hidden;
+  transition:max-width .42s cubic-bezier(.16,1,.3,1),opacity .3s ease,margin .3s ease;
+}
 
 /* Softly collapse (instead of hard hide) when the Offers section is visible,
    so it never covers the quantity controls. Animation is dropped so the
@@ -1327,8 +1336,19 @@ body{--cream:var(--black);--cream-2:var(--black);--gray-100:var(--black)}
   pointer-events:none;
 }
 
-.buy-fab:hover,.buy-fab:focus-visible{animation-play-state:paused}
-.buy-fab:hover .buy-fab__inner{transform:translateY(-2px)}
+/* Circular by default; on hover/focus expand into a pill with the label and a
+   gentle scale, pausing the float so the motion reads as intentional. */
+.buy-fab:hover,.buy-fab:focus-visible{
+  width:168px;
+  border-radius:var(--r-pill);
+  padding:0 20px 0 16px;
+  justify-content:flex-start;
+  animation-play-state:paused;
+}
+.buy-fab:hover .buy-fab__inner,
+.buy-fab:focus-visible .buy-fab__inner{transform:scale(1.06);gap:10px}
+.buy-fab:hover .buy-fab__label,
+.buy-fab:focus-visible .buy-fab__label{max-width:120px;opacity:1;margin-inline-start:2px}
 .buy-fab:active .buy-fab__inner{transform:scale(.96)}
 .buy-fab:focus-visible{outline:3px solid #fff;outline-offset:3px}
 
@@ -1339,8 +1359,18 @@ body{--cream:var(--black);--cream-2:var(--black);--gray-100:var(--black)}
 }
 
 @media(min-width:769px){
-  .buy-fab{height:60px;padding:0 24px 0 18px;font-size:16px}
-  .buy-fab__icon{width:22px;height:22px}
+  .buy-fab{height:60px;width:60px;font-size:16px}
+  .buy-fab:hover,.buy-fab:focus-visible{width:182px;padding:0 24px 0 18px}
+  .buy-fab__icon{width:24px;height:24px}
+}
+
+/* Touch devices have no hover: keep the label visible as a pill so the CTA
+   text is always readable, while preserving the circular look on pointer
+   devices. */
+@media(hover:none){
+  .buy-fab{width:auto;border-radius:var(--r-pill);padding:0 20px 0 16px;justify-content:flex-start}
+  .buy-fab__label{max-width:120px;opacity:1;margin-inline-start:2px}
+  .buy-fab__inner{gap:8px}
 }
 
 /* Respect reduced-motion: no continuous float or distraction. */
