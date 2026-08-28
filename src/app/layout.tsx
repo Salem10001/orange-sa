@@ -6,6 +6,7 @@ import ImageReveal from '@/components/animations/ImageReveal';
 import LocaleScope from '@/components/animations/LocaleScope';
 import { I18nProvider } from '@/i18n/I18nProvider';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import FloatingBuyButton from '@/components/FloatingBuyButton';
 import Script from 'next/script';
 import './globals.css';
 
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <LocaleScope>
             <LenisProvider>{children}</LenisProvider>
             <WhatsAppButton />
+            <FloatingBuyButton />
             <TextReveal />
             <ImageReveal />
           </LocaleScope>
