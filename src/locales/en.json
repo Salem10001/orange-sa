@@ -50,31 +50,6 @@
   "how": {
     "title": "How it works"
   },
-  "why": {
-    "overline": "SMALL • FAST • ALWAYS READY",
-    "titleEm1": "Direct",
-    "titleStrong": "Power",
-    "titleEm2": "for every day",
-    "lead": "No long cable and no bulky power bank. Mini Orange plugs straight into your device whenever you need a boost.",
-    "checklist": [
-      "5000mAh",
-      "20W fast charge",
-      "98g weight",
-      "Air-travel friendly",
-      "Digital display",
-      "Built-in stand",
-      "Four protection layers",
-      "Two-year warranty"
-    ],
-    "viewMenu": "See the product",
-    "howItWorks": "How it works",
-    "imageAlt": "Mini Orange charging a phone",
-    "noCableKicker": "ONE PIECE ONLY",
-    "noCableTitle": "No more cables.",
-    "noCableText": "No power bank, cable and extra pieces. Mini Orange alone plugs directly into your device whenever you need power.",
-    "safetyTitle": "Four smart protection layers",
-    "safetyText": "Protection from overheating, overcurrent, overcharging and short circuits."
-  },
   "makers": {
     "badgeLabel": "customers",
     "title1": "Why",

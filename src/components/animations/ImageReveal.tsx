@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 // Global image reveal: wraps every content image in an outer/inner pair and
-// plays the classic opposing-slide reveal on scroll. The WhyWellfed arch image
-// is intentionally skipped (it has its own cinematic arch reveal).
+// plays the classic opposing-slide reveal on scroll.
 export default function ImageReveal() {
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -13,7 +12,6 @@ export default function ImageReveal() {
       const imgs = Array.from(
         document.querySelectorAll<HTMLImageElement>('img')
       ).filter((img) => {
-        if (img.closest('.why-plate') || img.closest('.why-media')) return false;
         if (img.closest('.promo')) return false;
         if (img.closest('nav') || img.closest('.navbar') || img.closest('.salla-footer')) return false;
         if (img.closest('[data-no-reveal]')) return false;
