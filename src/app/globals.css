@@ -1315,3 +1315,168 @@ body{--cream:var(--black);--cream-2:var(--black);--gray-100:var(--black)}
   .buy-fab:hover .buy-fab__inner,.buy-fab:active .buy-fab__inner{transform:none}
 }
 
+/* ==================================================================
+   MOBILE COMPACTION LAYER  (max-width: 767px only)
+   Goal: at 100% device zoom the mobile layout should feel ~25% more
+   compact (more above-the-fold content, smaller type, tighter spacing)
+   WITHOUT using zoom / transform:scale / viewport hacks, and WITHOUT
+   changing desktop or tablet. Sizing is applied per-section so hierarchy
+   and section character are preserved.
+   Accessibility floors: body text >= 16px, utility labels >= 12px,
+   tap targets >= 44px; floating controls >= 52px.
+   ================================================================== */
+@media (max-width: 767px) {
+  :root {
+    --mobile-section-space: 52px;
+    --mobile-inline-space: 20px;
+    --mobile-title-scale: 0.78;
+    --mobile-body-scale: 0.9;
+    --container: min(1180px, calc(100vw - var(--mobile-inline-space)));
+  }
+
+  /* Generic sections that rely on the base `section` padding (How, Makers). */
+  section { padding: var(--mobile-section-space) 0; }
+
+  /* ---- Navbar: ~20% shorter, tap targets kept >= 44px ---- */
+  .nav { padding: 11px 0; }
+  .nav.is-scrolled { padding: 10px 0; }
+  .nav-inner { min-height: 46px; gap: 12px; width: calc(100% - var(--mobile-inline-space)); }
+  .brand-logo { width: 104px; }
+  .nav-burger { width: 44px; height: 44px; }
+  .lang-switch { min-width: 44px; height: 44px; }
+  .brand-be { width: 32px; height: 30px; font-size: 15px; }
+  .brand-name { font-size: 20px; }
+  .nav-mobile { padding: 8px; }
+  .nav-mobile a { padding: 10px 12px; font-size: 15px; }
+
+  /* ---- Hero: less whitespace, smaller headline, tighter stack ---- */
+  .hero-cream { padding-top: 64px; padding-bottom: 32px; }
+  .hero-cream-grid { gap: 18px; }
+  .hero-cream-title {
+    font-size: clamp(32px, 9.4vw, 46px);
+    line-height: 1.0;
+    margin-bottom: 14px;
+    text-wrap: balance;
+  }
+  .hero-cream-features { gap: 10px; margin-bottom: 22px; }
+  .hero-cream-feature { font-size: 16px; }
+  .hero-cream-feature-icon { width: 34px; height: 34px; }
+  .hero-cream-feature-icon svg { width: 32px; height: 32px; }
+  .hero-cream-media { min-height: min(380px, calc(108vw - 40px)); }
+  .hero-cream-arch { width: min(330px, calc(100% - 36px)); }
+
+  /* ---- Problem ---- */
+  .problem { padding: 52px 0; }
+  .problem-copy h2 { font-size: clamp(36px, 10vw, 50px); line-height: 1.04; text-wrap: balance; }
+  .problem-copy > p { font-size: 16px; }
+  .problem-visual { border-radius: 14px; }
+  .problem-answer-copy { font-size: clamp(26px, 8vw, 38px); }
+
+  /* ---- Problem story (final block) ---- */
+  .problem-story { padding: 52px 0; }
+  .problem-story-copy h2 { font-size: clamp(34px, 10vw, 52px); }
+  .problem-story-copy > p { font-size: 16px; }
+
+  /* ---- How it works ---- */
+  .how-steps { margin-top: 40px; gap: 16px; }
+  .how-video-duo { margin: 28px auto 36px; gap: 10px; }
+  .how-goodbye-cables { font-size: clamp(32px, 8.5vw, 62px); line-height: 1.08; }
+  .how-phone-wrapper { margin: 30px 0 20px; }
+  .phone-body { width: min(260px, calc(100vw - 60px)); }
+
+  /* ---- Safety ---- */
+  .safety { padding: 64px 0; }
+  .safety-copy h2 { font-size: clamp(44px, 14vw, 70px); line-height: .9; text-wrap: balance; }
+  .safety-copy > p { font-size: 16px; }
+  .safety-system { padding: 18px 0; }
+  .safety-system p { font-size: 13px; }
+
+  /* ---- Makers ---- */
+  .makers-grid { gap: 26px; }
+  .makers-title { font-size: clamp(34px, 9vw, 50px); text-wrap: balance; }
+  .makers-copy p { font-size: 16px; }
+  .makers-stamp { width: 98px; height: 98px; }
+  .makers-stamp-center strong { font-size: 22px; }
+
+  /* ---- Makers text-only (final block) ---- */
+  .makers-text-only { padding: 56px 0; }
+  .makers-text-panel .makers-title { font-size: clamp(48px, 13vw, 70px); }
+  .makers-text-panel > p { font-size: 16px; }
+
+  /* ---- Promo ---- */
+  .promo { padding-block: clamp(44px, 6vw, 64px); }
+  .promo-copy .sec-title { font-size: clamp(30px, 8vw, 44px); text-wrap: balance; }
+  .promo-copy p { font-size: 16px; margin: 14px 0 20px; }
+
+  /* ---- Comparison ---- */
+  .comparison { padding: 56px 0; }
+  .comparison-head { margin-bottom: 30px; }
+  .comparison-head .sec-title { font-size: clamp(32px, 8.5vw, 50px); text-wrap: balance; }
+  .comparison-head p { font-size: 16px; }
+  .comparison-row > * { padding: 12px 10px; font-size: 13px; }
+  .comparison-row:not(.comparison-labels) > strong,
+  .comparison-row:not(.comparison-labels) > b { min-height: 76px; padding: 26px 10px 10px; font-size: 12px; }
+
+  /* ---- Reviews ---- */
+  .reviews { padding: 56px 0; }
+  .reviews-head { margin-bottom: 30px; }
+  .reviews-head h2 { font-size: clamp(30px, 8vw, 48px); text-wrap: balance; }
+  .reviews-head p { font-size: 16px; }
+  .review { padding: 22px 16px; }
+  .review-text { font-size: 16px; }
+
+  /* ---- Testim ---- */
+  .testim { padding: 56px 0; }
+  .testim-head { margin-bottom: 30px; }
+  .testim-head h2 { font-size: clamp(30px, 8vw, 48px); text-wrap: balance; }
+  .testim-head p { font-size: 16px; }
+
+  /* ---- Salla reviews ---- */
+  .salla-reviews { padding: 56px 0; }
+  .salla-reviews-head { margin-bottom: 22px; }
+  .salla-reviews-head h2 { font-size: clamp(34px, 9vw, 54px); text-wrap: balance; }
+  .salla-rating-summary > strong { font-size: 36px; }
+  .salla-review { padding: 20px 16px; }
+  .salla-review > p { font-size: 16px; }
+
+  /* ---- Offers ---- */
+  .offers { padding-top: 60px !important; }
+  .offers-head { margin-bottom: 24px; }
+  .offers-head .sec-title { font-size: clamp(32px, 8.5vw, 50px); text-wrap: balance; }
+  .offers-head p { font-size: 16px; }
+  .offer-image { min-height: 300px !important; }
+  .offer-options button { padding: 13px 12px !important; min-height: 70px !important; }
+  .offer-total { margin: 18px 0 12px !important; padding-top: 16px !important; }
+  .offer-buy { min-height: 52px; }
+
+  /* ---- FAQ ---- */
+  .faq { padding-bottom: 60px; }
+  .faq-head { margin-bottom: 0; }
+  .faq-head .sec-title { font-size: clamp(32px, 8vw, 48px); text-wrap: balance; }
+  .faq-head p { font-size: 16px; }
+  .faq-grid { gap: 22px; }
+  .faq-q { min-height: 60px; font-size: clamp(16px, 4.4vw, 19px); }
+  .faq-answer p { font-size: 16px; line-height: 1.7; }
+
+  /* ---- Footer ---- */
+  .footer { padding-top: 40px !important; }
+  .footer-grid { gap: 22px 18px !important; }
+  .footer-brand p { font-size: 14px; }
+  .footer-col a { font-size: 14px; }
+  .footer-phone { font-size: 24px; }
+  .footer-bottom { margin-top: 22px !important; padding-top: 16px !important; font-size: 12px; }
+
+  /* ---- Salla footer ---- */
+  .salla-footer { padding-top: 46px !important; }
+  .salla-footer-about { font-size: 18px; margin-top: 30px; }
+  .salla-contact { margin-top: 34px; }
+  .salla-crafted { margin-top: 44px; }
+
+  /* ---- Floating controls: >= 52px tap targets, honour safe-area ---- */
+  .wa-fab { width: 52px; height: 52px; }
+  .wa-fab__icon { width: 28px; height: 28px; }
+  .buy-fab { height: 52px; min-height: 52px; }
+  .buy-fab:hover,
+  .buy-fab:focus-visible { width: 160px; }
+}
+

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Tajawal } from 'next/font/google';
 import LenisProvider from '@/components/animations/LenisProvider';
 import TextReveal from '@/components/animations/TextReveal';
@@ -22,6 +22,12 @@ const tajawal = Tajawal({
   variable: '--font-tajawal',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lp.orange-sa.com'),

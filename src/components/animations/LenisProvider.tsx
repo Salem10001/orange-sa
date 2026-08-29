@@ -29,6 +29,14 @@ export default function LenisProvider({ children }: { children: ReactNode }) {
       ScrollTrigger.refresh();
     };
 
+    // Recalculate ScrollTrigger positions after responsive layout changes
+    // (orientation change, browser-zoom breakpoint switches, etc.).
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    };
+
     const handleScrollTo = (event: Event) => {
       const customEvent = event as CustomEvent<string>;
       lenis.scrollTo(customEvent.detail, {
@@ -41,6 +49,7 @@ export default function LenisProvider({ children }: { children: ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     window.addEventListener("load", refresh);
+    window.addEventListener("resize", handleResize);
     window.addEventListener("lenis-scroll-to", handleScrollTo);
 
     requestAnimationFrame(refresh);
@@ -48,7 +57,9 @@ export default function LenisProvider({ children }: { children: ReactNode }) {
     return () => {
       gsap.ticker.remove(update);
       window.removeEventListener("load", refresh);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("lenis-scroll-to", handleScrollTo);
+      clearTimeout(resizeTimer);
       lenis.destroy();
     };
   }, []);
