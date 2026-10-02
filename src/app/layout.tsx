@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lp.orange-sa.com'),
-  title: 'Mini Orange â€” Big power, pocket size',
+  title: 'Mini Orange — Big power, pocket size',
   description: '5000mAh portable charger with 20W fast charging and no cable.',
   icons: {
     icon: '/assets/logo.svg',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Mini Orange â€” Big power, pocket size',
+    title: 'Mini Orange — Big power, pocket size',
     description: 'Portable power for your phone and daily devices, small enough for your pocket.',
     type: 'website',
     locale: 'en_US',
@@ -76,12 +76,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       strategy="afterInteractive"
     />
     <Script id="google-ads-config" strategy="afterInteractive">
-      {
+      {`
         window.dataLayer = window.dataLayer || [];
         function gtag(){window.dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'AW-1848529305');
-      }
+      `}
     </Script>
         <script dangerouslySetInnerHTML={localeBootstrap} />
       </head>
