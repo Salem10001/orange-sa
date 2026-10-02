@@ -11,7 +11,7 @@ import Script from 'next/script';
 import './globals.css';
 
 const TIKTOK_PIXEL_ID = 'D5SARARC77U2HKOKSEDG';
-const GOOGLE_ADS_ID = 'AW-1848529305';
+const GOOGLE_ADS_ID = 'AW-18485293505';
 
 // Official TikTok Pixel base + single init. Guarded so React re-renders never
 // re-load the SDK or fire a second PageView.
@@ -72,7 +72,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
     <Script
       id="google-ads-gtag"
-      src="https://www.googletagmanager.com/gtag/js?id=AW-1848529305"
+      src="https://www.googletagmanager.com/gtag/js?id=AW-18485293505"
       strategy="afterInteractive"
     />
     <Script id="google-ads-config" strategy="afterInteractive">
@@ -80,7 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         window.dataLayer = window.dataLayer || [];
         function gtag(){window.dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'AW-1848529305');
+        gtag('config', 'AW-18485293505');
       `}
     </Script>
         <script dangerouslySetInnerHTML={localeBootstrap} />

@@ -153,6 +153,18 @@ export default function Offers() {
           }],
         });
       }
+
+      // Google Ads purchase conversion. This fires once after Salla returns
+      // a valid checkout URL, using the selected offer value.
+      const gtag = gtagApi();
+      if (gtag) {
+        gtag('event', 'conversion', {
+          send_to: 'AW-18485293505/I76aCPe6nY4dEMHjvO5E',
+          value: sallaTotal,
+          currency: 'SAR',
+          transaction_id: requestId,
+        });
+      }
       // Fire InitiateCheckout exactly once, only after a valid Salla URL.
       const ttq = ttqApi();
       if (ttq && typeof ttq.track === 'function') {
