@@ -11,6 +11,7 @@ import Script from 'next/script';
 import './globals.css';
 
 const TIKTOK_PIXEL_ID = 'D5SARARC77U2HKOKSEDG';
+const GOOGLE_ADS_ID = 'AW-1848529305';
 
 // Official TikTok Pixel base + single init. Guarded so React re-renders never
 // re-load the SDK or fire a second PageView.
@@ -31,7 +32,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lp.orange-sa.com'),
-  title: 'Mini Orange — Big power, pocket size',
+  title: 'Mini Orange â€” Big power, pocket size',
   description: '5000mAh portable charger with 20W fast charging and no cable.',
   icons: {
     icon: '/assets/logo.svg',
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Mini Orange — Big power, pocket size',
+    title: 'Mini Orange â€” Big power, pocket size',
     description: 'Portable power for your phone and daily devices, small enough for your pocket.',
     type: 'website',
     locale: 'en_US',
@@ -69,6 +70,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${tajawal.variable}`}
     >
       <head>
+    <Script
+      id="google-ads-gtag"
+      src="https://www.googletagmanager.com/gtag/js?id=AW-1848529305"
+      strategy="afterInteractive"
+    />
+    <Script id="google-ads-config" strategy="afterInteractive">
+      {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-1848529305');
+      }
+    </Script>
         <script dangerouslySetInnerHTML={localeBootstrap} />
       </head>
       <body>

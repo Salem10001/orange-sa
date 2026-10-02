@@ -23,10 +23,10 @@ type PriceInfo = {
 type Status = 'idle' | 'processing' | 'error' | 'price-updated';
 
 const TITLES = {
-  ar: ['قطعة واحدة', 'قطعتان', 'ثلاث قطع'],
+  ar: ['Ù‚Ø·Ø¹Ø© ÙˆØ§Ø­Ø¯Ø©', 'Ù‚Ø·Ø¹ØªØ§Ù†', 'Ø«Ù„Ø§Ø« Ù‚Ø·Ø¹'],
   en: ['One piece', 'Two pieces', 'Three pieces'],
 };
-const STORE_LABEL = { ar: 'ر.س', en: 'SAR' };
+const STORE_LABEL = { ar: 'Ø±.Ø³', en: 'SAR' };
 
 export default function Offers() {
   const { locale } = useI18n();
@@ -93,6 +93,11 @@ export default function Offers() {
     };
   };
 
+
+  const gtagApi = () =>
+    (window as unknown as {
+      gtag?: (...args: unknown[]) => void;
+    }).gtag;
   const checkoutLock = useRef(false);
 
   const buy = async () => {
@@ -134,6 +139,20 @@ export default function Offers() {
       const sallaProductId = data.product_id || expected.product_id;
       const sallaPieces = typeof data.pieces === 'number' ? data.pieces : expected.pieces;
 
+
+      const gtag = gtagApi();
+      if (gtag) {
+        gtag('event', 'begin_checkout', {
+          currency: 'SAR',
+          value: sallaTotal,
+          items: [{
+            item_id: sallaProductId,
+            item_name: 'Mini Orange',
+            quantity: sallaPieces,
+            price: Number((sallaTotal / sallaPieces).toFixed(2)),
+          }],
+        });
+      }
       // Fire InitiateCheckout exactly once, only after a valid Salla URL.
       const ttq = ttqApi();
       if (ttq && typeof ttq.track === 'function') {
@@ -178,13 +197,13 @@ export default function Offers() {
           ) : p ? (
             <small>
               {unavailable
-                ? (ar ? 'غير متوفر' : 'Unavailable')
+                ? (ar ? 'ØºÙŠØ± Ù…ØªÙˆÙØ±' : 'Unavailable')
                 : discounted
                 ? ar
-                  ? `وفر ${p.discount} ${label}`
+                  ? `ÙˆÙØ± ${p.discount} ${label}`
                   : `Save ${p.discount} ${label}`
                 : ar
-                ? `سعر القطعة ${p.per_piece} ${label}`
+                ? `Ø³Ø¹Ø± Ø§Ù„Ù‚Ø·Ø¹Ø© ${p.per_piece} ${label}`
                 : `${label} ${p.per_piece} each`}
             </small>
           ) : null}
@@ -195,11 +214,11 @@ export default function Offers() {
           ) : p ? (
             <>
               {discounted && <s>{p.original_total} {label}</s>}
-              <b>{unavailable ? '—' : `${p.total} ${label}`}</b>
+              <b>{unavailable ? 'â€”' : `${p.total} ${label}`}</b>
             </>
           ) : null}
         </span>
-        {best && <em>{ar ? 'الأكثر طلبًا' : 'Most popular'}</em>}
+        {best && <em>{ar ? 'Ø§Ù„Ø£ÙƒØ«Ø± Ø·Ù„Ø¨Ù‹Ø§' : 'Most popular'}</em>}
       </button>
     );
   };
@@ -212,22 +231,22 @@ export default function Offers() {
   return (
     <section id="offers" className="offers">
       <div className="container">
-        <Reveal className="offers-head"><span className="overline">{ar ? 'العرض والكمية' : 'OFFERS & QUANTITY'}</span><h2 className="sec-title">{ar ? 'خذ أكثر. وادفع أقل.' : 'Take more. Pay less.'}</h2><p>{ar ? 'اختر الكمية المناسبة، ثم أكمل الطلب بأمان داخل متجر سلة.' : 'Choose your quantity, then complete checkout securely in Salla.'}</p></Reveal>
+        <Reveal className="offers-head"><span className="overline">{ar ? 'Ø§Ù„Ø¹Ø±Ø¶ ÙˆØ§Ù„ÙƒÙ…ÙŠØ©' : 'OFFERS & QUANTITY'}</span><h2 className="sec-title">{ar ? 'Ø®Ø° Ø£ÙƒØ«Ø±. ÙˆØ§Ø¯ÙØ¹ Ø£Ù‚Ù„.' : 'Take more. Pay less.'}</h2><p>{ar ? 'Ø§Ø®ØªØ± Ø§Ù„ÙƒÙ…ÙŠØ© Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø©ØŒ Ø«Ù… Ø£ÙƒÙ…Ù„ Ø§Ù„Ø·Ù„Ø¨ Ø¨Ø£Ù…Ø§Ù† Ø¯Ø§Ø®Ù„ Ù…ØªØ¬Ø± Ø³Ù„Ø©.' : 'Choose your quantity, then complete checkout securely in Salla.'}</p></Reveal>
         <div className="offer-layout">
           <Reveal className="offer-image" direction="right"><img src="/assets/mini-orange-cutout.png" alt="Mini Orange" /></Reveal>
           <Reveal className="offer-panel" direction="left">
             {priceError ? (
-              <p className="offer-price-error" role="alert">{ar ? 'تعذر تحميل السعر' : 'Could not load pricing'}</p>
+              <p className="offer-price-error" role="alert">{ar ? 'ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø³Ø¹Ø±' : 'Could not load pricing'}</p>
             ) : (
               <div className="offer-options">
                 {QUANTITIES.map((q, i) => renderOption(q, i))}
               </div>
             )}
             <div className="offer-total">
-              <span>{ar ? 'الإجمالي' : 'Total'}</span>
+              <span>{ar ? 'Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ' : 'Total'}</span>
               <strong>
                 {loading || !current
-                  ? '—'
+                  ? 'â€”'
                   : `${current.total} ${label}`}
               </strong>
             </div>
@@ -239,21 +258,21 @@ export default function Offers() {
               aria-busy={status === 'processing'}
             >
             {status === 'processing'
-              ? (ar ? 'جاري تحويلك للدفع...' : 'Redirecting to checkout...')
+              ? (ar ? 'Ø¬Ø§Ø±ÙŠ ØªØ­ÙˆÙŠÙ„Ùƒ Ù„Ù„Ø¯ÙØ¹...' : 'Redirecting to checkout...')
               : (current && !current.available
-                  ? (ar ? 'غير متوفر' : 'Unavailable')
+                  ? (ar ? 'ØºÙŠØ± Ù…ØªÙˆÙØ±' : 'Unavailable')
                   : current
-                  ? (ar ? `اطلب ${TITLES.ar[QUANTITIES.indexOf(selected)]} الآن` : `Order ${TITLES.en[QUANTITIES.indexOf(selected)]}`)
-                  : (ar ? 'اختر الكمية' : 'Choose a quantity'))}
+                  ? (ar ? `Ø§Ø·Ù„Ø¨ ${TITLES.ar[QUANTITIES.indexOf(selected)]} Ø§Ù„Ø¢Ù†` : `Order ${TITLES.en[QUANTITIES.indexOf(selected)]}`)
+                  : (ar ? 'Ø§Ø®ØªØ± Ø§Ù„ÙƒÙ…ÙŠØ©' : 'Choose a quantity'))}
             </button>
             {status === 'error' && (
               <p className="offer-buy-error" role="alert">
-                {ar ? 'تعذر إتمام الطلب، حاول مرة أخرى.' : 'Could not complete your order.'}
-                <button type="button" className="offer-buy-retry" onClick={buy}>{ar ? 'إعادة المحاولة' : 'Retry'}</button>
+                {ar ? 'ØªØ¹Ø°Ø± Ø¥ØªÙ…Ø§Ù… Ø§Ù„Ø·Ù„Ø¨ØŒ Ø­Ø§ÙˆÙ„ Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.' : 'Could not complete your order.'}
+                <button type="button" className="offer-buy-retry" onClick={buy}>{ar ? 'Ø¥Ø¹Ø§Ø¯Ø© Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø©' : 'Retry'}</button>
               </p>
             )}
             {notice && <p className="offer-notice" role="status">{notice}</p>}
-            <p className="offer-trust">{ar ? 'دفع آمن عبر سلة · توصيل مجاني · ضمان سنتين' : 'Secure Salla checkout · Free delivery · Two-year warranty'}</p>
+            <p className="offer-trust">{ar ? 'Ø¯ÙØ¹ Ø¢Ù…Ù† Ø¹Ø¨Ø± Ø³Ù„Ø© Â· ØªÙˆØµÙŠÙ„ Ù…Ø¬Ø§Ù†ÙŠ Â· Ø¶Ù…Ø§Ù† Ø³Ù†ØªÙŠÙ†' : 'Secure Salla checkout Â· Free delivery Â· Two-year warranty'}</p>
           </Reveal>
         </div>
       </div>
